@@ -1,0 +1,15 @@
+{
+  "pdf_name": "DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus.pdf",
+  "tool": "markitdown",
+  "elapsed_seconds": 3.584,
+  "text_characters": 72912,
+  "tables_count": 0,
+  "figures_count": 0,
+  "table_quality": 0.0,
+  "notes": "",
+  "success": true,
+  "artifact_dir": "/app/artifacts/DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus/markitdown",
+  "metadata": {
+    "engine": "markitdown"
+  }
+}

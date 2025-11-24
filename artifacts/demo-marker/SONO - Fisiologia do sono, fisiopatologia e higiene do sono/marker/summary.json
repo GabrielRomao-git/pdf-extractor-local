@@ -1,0 +1,17 @@
+{
+  "pdf_name": "SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf",
+  "tool": "marker",
+  "elapsed_seconds": 0.0,
+  "text_characters": 60,
+  "tables_count": 0,
+  "figures_count": 0,
+  "table_quality": 0.0,
+  "notes": "Erro inesperado: name 'shutil' is not defined",
+  "success": false,
+  "artifact_dir": "/app/artifacts/demo-marker/SONO - Fisiologia do sono, fisiopatologia e higiene do sono/marker",
+  "metadata": {
+    "error": "Erro inesperado: name 'shutil' is not defined",
+    "tool": "marker"
+  },
+  "error": "Erro inesperado: name 'shutil' is not defined"
+}

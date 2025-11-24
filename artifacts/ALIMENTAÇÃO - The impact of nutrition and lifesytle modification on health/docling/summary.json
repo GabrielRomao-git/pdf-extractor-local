@@ -1,0 +1,17 @@
+{
+  "pdf_name": "ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health.pdf",
+  "tool": "docling",
+  "elapsed_seconds": 64.028,
+  "text_characters": 89750,
+  "tables_count": 6,
+  "figures_count": 0,
+  "table_quality": 0.0,
+  "notes": "",
+  "success": true,
+  "artifact_dir": "/app/artifacts/ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health/docling",
+  "metadata": {
+    "engine": "docling",
+    "num_pages": 8,
+    "version": null
+  }
+}

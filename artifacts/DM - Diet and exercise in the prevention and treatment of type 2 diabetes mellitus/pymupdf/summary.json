@@ -1,0 +1,16 @@
+{
+  "pdf_name": "DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus.pdf",
+  "tool": "pymupdf",
+  "elapsed_seconds": 7.557,
+  "text_characters": 73184,
+  "tables_count": 3,
+  "figures_count": 0,
+  "table_quality": 0.67,
+  "notes": "",
+  "success": true,
+  "artifact_dir": "/app/artifacts/DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus/pymupdf",
+  "metadata": {
+    "engine": "pymupdf",
+    "num_pages": 11
+  }
+}

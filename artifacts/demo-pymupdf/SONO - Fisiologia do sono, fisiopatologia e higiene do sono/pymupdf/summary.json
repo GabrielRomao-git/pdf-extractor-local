@@ -1,0 +1,16 @@
+{
+  "pdf_name": "SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf",
+  "tool": "pymupdf",
+  "elapsed_seconds": 5.934,
+  "text_characters": 57092,
+  "tables_count": 0,
+  "figures_count": 11,
+  "table_quality": 0.0,
+  "notes": "",
+  "success": true,
+  "artifact_dir": "artifacts/demo-pymupdf/SONO - Fisiologia do sono, fisiopatologia e higiene do sono/pymupdf",
+  "metadata": {
+    "engine": "pymupdf",
+    "num_pages": 11
+  }
+}

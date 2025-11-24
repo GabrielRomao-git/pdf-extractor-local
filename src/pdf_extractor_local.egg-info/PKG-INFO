@@ -1,0 +1,183 @@
+Metadata-Version: 2.4
+Name: pdf-extractor-local
+Version: 0.1.0
+Summary: Benchmark local de extração de conteúdo em PDFs acadêmicos reais
+Author: Gabriel Romão
+Requires-Python: <3.13,>=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: typer>=0.12
+Requires-Dist: rich>=13.7
+Requires-Dist: pydantic>=2.7
+Requires-Dist: pandas>=2.2
+Requires-Dist: numpy>=1.26
+Requires-Dist: tqdm>=4.66
+Requires-Dist: python-dotenv>=1.0
+Requires-Dist: httpx>=0.27
+Requires-Dist: beautifulsoup4>=4.12
+Requires-Dist: lxml>=5.2
+Requires-Dist: pymupdf>=1.24
+Requires-Dist: pdfplumber>=0.11
+Requires-Dist: docling>=2.0; sys_platform != "darwin" or platform_machine != "x86_64"
+Requires-Dist: markitdown>=0.0.3
+Requires-Dist: grobid-client-python>=0.0.8
+Requires-Dist: nougat-ocr>=0.1.17; sys_platform != "darwin" or platform_machine != "x86_64"
+Requires-Dist: marker-pdf<0.3,>=0.2.0; sys_platform != "darwin" or platform_machine != "x86_64"
+Requires-Dist: pikepdf>=9.5
+Requires-Dist: pytesseract>=0.3.11
+Requires-Dist: opencv-python-headless>=4.10
+Requires-Dist: pillow<11.0,>=10.1
+Requires-Dist: scikit-image>=0.24
+Requires-Dist: albumentations<1.4,>=1.3
+Provides-Extra: full
+Requires-Dist: torch>=2.3; (sys_platform != "darwin" or platform_machine != "x86_64") and extra == "full"
+Requires-Dist: torchvision>=0.17; (sys_platform != "darwin" or platform_machine != "x86_64") and extra == "full"
+Requires-Dist: torchaudio>=2.2; (sys_platform != "darwin" or platform_machine != "x86_64") and extra == "full"
+Requires-Dist: transformers<4.42,>=4.37; (sys_platform != "darwin" or platform_machine != "x86_64") and extra == "full"
+Requires-Dist: sentencepiece>=0.2; (sys_platform != "darwin" or platform_machine != "x86_64") and extra == "full"
+Requires-Dist: accelerate>=0.33; (sys_platform != "darwin" or platform_machine != "x86_64") and extra == "full"
+Provides-Extra: dev
+Requires-Dist: pytest>=8.3; extra == "dev"
+Requires-Dist: pytest-cov>=5.0; extra == "dev"
+Requires-Dist: ruff>=0.6; extra == "dev"
+Requires-Dist: black>=24.8; extra == "dev"
+Requires-Dist: mypy>=1.11; extra == "dev"
+Provides-Extra: dynamic
+Requires-Dist: scripts; extra == "dynamic"
+Dynamic: license-file
+
+# PDF Extractor Local
+
+Projeto para avaliação comparativa de ferramentas de extração de conteúdo (texto, tabelas, fórmulas e figuras) em PDFs acadêmicos reais. O objetivo é testar múltiplas bibliotecas em um ambiente padronizado (Docker + Python 3.11 via [UV](https://github.com/astral-sh/uv)) e produzir métricas e recomendações claras para o time.
+
+## Estrutura Inicial
+
+```
+pdf-extractor-local/
+├── pdfs-reais/            # 5 PDFs fornecidos pelo time
+├── src/pdf_extractor/     # Código-fonte principal (pipelines, métricas, CLI)
+├── docs/                  # Documentação (comparativos, guias, demo)
+├── artifacts/             # Saídas geradas (textos, tabelas, relatórios)
+├── Dockerfile             # Imagem base python:3.11-slim com UV e deps nativas
+├── docker-compose.yml     # Orquestração (serviço principal + Grobid opcional)
+├── pyproject.toml         # Metadados do projeto e dependências gerenciadas pelo UV
+└── README.md              # Este documento
+```
+
+## Arquitetura de funcionamento
+
+- **CLI (`src/pdf_extractor/cli.py`)**: expõe três subcomandos (`extract`, `demo`, `evaluate`) e é o ponto de entrada usado por `uv run pdf-extractor ...`.
+- **ExtractionManager (`src/pdf_extractor/pipelines/manager.py`)**: recebe a lista de PDFs e ferramentas, instancia os adaptadores necessários, coleta métricas e gera `artifacts/<PDF>/<tool>`.
+- **Adaptadores (`src/pdf_extractor/pipelines/adapters/`)**: encapsulam cada ferramenta externa. A maioria chama bibliotecas Python diretamente; casos especiais (Marker/Nougat) executam CLIs oficiais (`marker_single`, `nougat`) e normalizam a saída.
+- **Artefatos**: todo resultado gera `text.md`, `tables.json`, `figures.json` e `summary.json`, além do consolidado `artifacts/comparativo.json` para posterior análise.
+- **Docker Compose**: o serviço `app` roda a CLI com todas as dependências (incluindo PyTorch); o serviço opcional `grobid` fica disponível para o adaptador de mesmo nome. Montamos `pdfs-reais/`, `artifacts/` e `docs/` para inspecionar os resultados no host.
+
+## Pré-requisitos
+
+- [UV](https://github.com/astral-sh/uv) instalado localmente (>= 0.4).
+- Docker e Docker Compose.
+- PDFs de teste na pasta `pdfs-reais/` (já incluídos).
+
+## Como começar
+
+### Local (UV)
+
+```bash
+# 1. Instale as dependências
+uv sync --dev
+
+# 2. Rode todas as ferramentas suportadas em todos os PDFs
+uv run pdf-extractor extract --pdf-dir pdfs-reais --artifact-dir artifacts
+
+# 2b. Rode apenas algumas ferramentas (ex.: PyMuPDF + pdfplumber)
+uv run pdf-extractor extract \
+  --pdf-dir pdfs-reais \
+  --artifact-dir artifacts \
+  --tools pymupdf,pdfplumber
+
+# 2c. Rode somente uma ferramenta pesada (ex.: marker) para todos os PDFs
+uv run pdf-extractor extract --tools marker
+
+# 3. Demo rápida com apenas 1 PDF e 1 ferramenta (gera um markdown resumido)
+uv run pdf-extractor demo \
+  --tool marker \
+  --pdf "pdfs-reais/SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf" \
+  --artifact-dir artifacts/demo-marker
+
+# 4. Consolide os resultados em um comparativo markdown
+uv run pdf-extractor evaluate \
+  --report-path artifacts/comparativo.json \
+  --output-markdown docs/comparativo.md
+```
+
+### Via Docker Compose
+
+```bash
+# Recrie a imagem com todas as dependências (inclui marker_single e checkpoints do Nougat)
+docker compose build app
+
+# Execute todas as ferramentas dentro do contêiner
+docker compose run --rm app uv run pdf-extractor extract \
+  --pdf-dir /app/pdfs-reais \
+  --artifact-dir /app/artifacts
+
+# Execute apenas uma ferramenta (ex.: marker ou nougat)
+docker compose run --rm app uv run pdf-extractor extract \
+  --pdf-dir /app/pdfs-reais \
+  --artifact-dir /app/artifacts \
+  --tools marker
+
+# Rode a demo para um único PDF (útil para validar marker/nougat isoladamente)
+docker compose run --rm app uv run pdf-extractor demo \
+  --tool marker \
+  --pdf "/app/pdfs-reais/SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf" \
+  --artifact-dir /app/artifacts/demo-marker
+
+# Para processamento completo + Grobid, suba tudo de uma vez
+docker compose up --build
+```
+
+## Estrutura de artefatos
+
+- `artifacts/<PDF>/<tool>/text.md`: texto principal em Markdown ou texto simples.
+- `artifacts/<PDF>/<tool>/tables.json`: tabelas normalizadas.
+- `artifacts/<PDF>/<tool>/figures.json`: descrições/metadados de figuras.
+- `artifacts/<PDF>/<tool>/summary.json`: métricas individuais (tempo, % de caracteres, qualidade de tabelas).
+- `artifacts/comparativo.json`: consolidação automática (entrada para `pdf-extractor evaluate`).
+
+## Docker Compose
+
+O `docker-compose.yml` fornece dois serviços:
+
+1. `app`: imagem baseada em `python:3.11-slim`, com UV e todas as bibliotecas (Docling, MarkItDown, PyMuPDF, pdfplumber, Nougat, Marker).
+2. `grobid`: container oficial `lfoppiano/grobid`. O serviço `app` depende dele para o adaptador Grobid.
+
+Mounts importantes:
+
+- `./pdfs-reais` (somente leitura) → `/app/pdfs-reais`.
+- `./artifacts` e `./docs` → sincronizados para inspecionar saídas localmente.
+
+Rodando:
+
+```bash
+docker compose up --build
+# ou somente extrair sem Grobid
+docker compose run --rm app uv run pdf-extractor extract --tools pymupdf,pdfplumber
+```
+
+## Compatibilidade em macOS x86_64
+
+Algumas dependências (Docling, Nougat e Marker) exigem PyTorch >= 2.3, que não possui wheels oficiais para macOS Intel. Para manter o `uv sync` funcional no host:
+
+- Essas bibliotecas são instaladas automaticamente apenas em plataformas suportadas (Linux, macOS ARM, etc.).
+- No mac x86_64, os adaptadores correspondentes continuam disponíveis via Docker (`docker compose run --rm app ...`) e a CLI lida com a ausência dos pacotes retornando erros amigáveis.
+- Se precisar testar Docling/Nougat/Marker localmente, utilize o contêiner ou uma VM Linux.
+- **Marker em CPU:** mesmo dentro do contêiner, o CLI do Marker apresenta instabilidades quando roda apenas em CPU (encerra com código `-7` após carregar os modelos Surya). Caso precise de resultados do Marker, priorize uma máquina com GPU Nvidia compatível ou use as demais ferramentas (Docling/Markitdown) como fallback.
+- **Marker Single CLI:** seguindo o README oficial, utilizamos `marker_single` (em vez de `marker`) para processar um PDF por vez e evitar as falhas do modo multiprocessado em CPU. Se quiser voltar ao comportamento anterior, defina `MARKER_CLI=marker`.
+- **Nougat offline:** o Dockerfile passa a baixar o checkpoint `0.1.0-base` no build e exporta `NOUGAT_CHECKPOINT`, permitindo que o CLI rode sem acesso à internet durante a extração.
+- **Tuning do Marker:** o adaptador aceita:
+  - `MARKER_USE_UV_RUN` (padrão `1`) para rodar exatamente `uv run marker_single ...`, como recomendado na documentação oficial.
+  - `MARKER_BATCH_MULTIPLIER` (padrão `1`) e `MARKER_EXTRA_ARGS` para propagar flags extras ao CLI.
+  - `MARKER_MAX_RETRIES` (padrão `1`, ou seja, até 2 tentativas) para reexecutar automaticamente em códigos `-7/-8/-9`.
+
+> **Status:** ambiente preparado com UV + Docker; pipelines implementados e documentação/demo atualizadas, com fallback para plataformas sem suporte oficial do PyTorch.

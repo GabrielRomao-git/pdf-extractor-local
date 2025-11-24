@@ -1,0 +1,17 @@
+{
+  "pdf_name": "ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health.pdf",
+  "tool": "marker",
+  "elapsed_seconds": 72.014,
+  "text_characters": 111,
+  "tables_count": 0,
+  "figures_count": 0,
+  "table_quality": 0.0,
+  "notes": "Marker retornou código 137: Detecting bboxes:   0%|          | 0/2 [00:00<?, ?it/s]",
+  "success": false,
+  "artifact_dir": "/app/artifacts/ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health/marker",
+  "metadata": {
+    "error": "Marker retornou código 137: Detecting bboxes:   0%|          | 0/2 [00:00<?, ?it/s]",
+    "tool": "marker"
+  },
+  "error": "Marker retornou código 137: Detecting bboxes:   0%|          | 0/2 [00:00<?, ?it/s]"
+}

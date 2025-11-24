@@ -1,0 +1,17 @@
+{
+  "pdf_name": "MOVIMENTO - The associations between sedentary behavior and risk of depression.pdf",
+  "tool": "docling",
+  "elapsed_seconds": 51.293,
+  "text_characters": 53299,
+  "tables_count": 3,
+  "figures_count": 0,
+  "table_quality": 0.0,
+  "notes": "",
+  "success": true,
+  "artifact_dir": "/app/artifacts/MOVIMENTO - The associations between sedentary behavior and risk of depression/docling",
+  "metadata": {
+    "engine": "docling",
+    "num_pages": 10,
+    "version": null
+  }
+}

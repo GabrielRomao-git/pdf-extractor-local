@@ -1,0 +1,16 @@
+{
+  "pdf_name": "ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health.pdf",
+  "tool": "grobid",
+  "elapsed_seconds": 35.286,
+  "text_characters": 26327,
+  "tables_count": 1,
+  "figures_count": 2,
+  "table_quality": 1.0,
+  "notes": "",
+  "success": true,
+  "artifact_dir": "/app/artifacts/ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health/grobid",
+  "metadata": {
+    "engine": "grobid",
+    "endpoint": "http://grobid:8070/api/processFulltextDocument"
+  }
+}

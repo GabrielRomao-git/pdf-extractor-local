@@ -1,0 +1,16 @@
+{
+  "pdf_name": "ALIMENTAÇÃO- Journal of Internal Medicine - 2023 - Hu - Diet strategies for promoting healthy aging and longevity  An epidemiological.pdf",
+  "tool": "grobid",
+  "elapsed_seconds": 5.053,
+  "text_characters": 60060,
+  "tables_count": 2,
+  "figures_count": 3,
+  "table_quality": 1.0,
+  "notes": "",
+  "success": true,
+  "artifact_dir": "/app/artifacts/ALIMENTAÇÃO- Journal of Internal Medicine - 2023 - Hu - Diet strategies for promoting healthy aging and longevity  An epidemiological/grobid",
+  "metadata": {
+    "engine": "grobid",
+    "endpoint": "http://grobid:8070/api/processFulltextDocument"
+  }
+}

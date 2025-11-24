@@ -1,0 +1,33 @@
+services:
+  app:
+    build:
+      context: .
+    image: vitat/pdf-extractor-local:latest
+    shm_size: "4g"
+    mem_limit: 8g
+    environment:
+      GROBID_URL: http://grobid:8070
+      UV_LINK_MODE: copy
+    volumes:
+      - ./pdfs-reais:/app/pdfs-reais:ro
+      - ./artifacts:/app/artifacts
+      - ./docs:/app/docs
+    depends_on:
+      - grobid
+    command: >
+      uv run pdf-extractor extract
+        --pdf-dir /app/pdfs-reais
+        --artifact-dir /app/artifacts
+
+  grobid:
+    image: lfoppiano/grobid:0.7.3
+    ports:
+      - "8070:8070"
+    environment:
+      - GROBID_HOME=/opt/grobid
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8070/api/isalive"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+

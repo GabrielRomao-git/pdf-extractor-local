@@ -1,0 +1,17 @@
+{
+  "pdf_name": "MOVIMENTO - The associations between sedentary behavior and risk of depression.pdf",
+  "tool": "marker",
+  "elapsed_seconds": 289.227,
+  "text_characters": 281,
+  "tables_count": 0,
+  "figures_count": 0,
+  "table_quality": 0.0,
+  "notes": "Marker retornou código -7: /usr/local/lib/python3.11/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown\n  warnings.warn('resource_tracker: There appear to be %d '",
+  "success": false,
+  "artifact_dir": "artifacts/demo/MOVIMENTO - The associations between sedentary behavior and risk of depression/marker",
+  "metadata": {
+    "error": "Marker retornou código -7: /usr/local/lib/python3.11/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown\n  warnings.warn('resource_tracker: There appear to be %d '",
+    "tool": "marker"
+  },
+  "error": "Marker retornou código -7: /usr/local/lib/python3.11/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown\n  warnings.warn('resource_tracker: There appear to be %d '"
+}

@@ -1,0 +1,17 @@
+{
+  "pdf_name": "DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus.pdf",
+  "tool": "marker",
+  "elapsed_seconds": 33.8,
+  "text_characters": 111,
+  "tables_count": 0,
+  "figures_count": 0,
+  "table_quality": 0.0,
+  "notes": "Marker retornou código 137: Detecting bboxes:   0%|          | 0/3 [00:00<?, ?it/s]",
+  "success": false,
+  "artifact_dir": "/app/artifacts/DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus/marker",
+  "metadata": {
+    "error": "Marker retornou código 137: Detecting bboxes:   0%|          | 0/3 [00:00<?, ?it/s]",
+    "tool": "marker"
+  },
+  "error": "Marker retornou código 137: Detecting bboxes:   0%|          | 0/3 [00:00<?, ?it/s]"
+}
