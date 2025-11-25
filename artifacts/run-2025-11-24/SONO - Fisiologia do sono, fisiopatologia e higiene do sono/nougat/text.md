@@ -1,0 +1,1 @@
+Falha na ferramenta nougat: CLI do Nougat (nougat) não encontrado no PATH.

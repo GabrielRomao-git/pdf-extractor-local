@@ -16,10 +16,12 @@ class NougatAdapter(ToolAdapter):
     description = "Cli Nougat para converter PDFs científicos em Markdown"
 
     def __init__(self, command: str | None = None, model: str | None = None) -> None:
+        """Define o binário do Nougat e o modelo utilizado no processamento."""
         self.command = command or os.getenv("NOUGAT_CLI", "nougat")
         self.model = model or os.getenv("NOUGAT_MODEL", "0.1.0-base")
 
     def extract(self, pdf_path: Path) -> ExtractionBundle:
+        """Executa o CLI do Nougat para gerar markdown e extrair tabelas estruturadas."""
         cli_path = shutil.which(self.command)
         if not cli_path:
             raise AdapterRuntimeError(

@@ -1,135 +1,134 @@
 # PDF Extractor Local
 
-Projeto para avaliação comparativa de ferramentas de extração de conteúdo (texto, tabelas, fórmulas e figuras) em PDFs acadêmicos reais. O objetivo é testar múltiplas bibliotecas em um ambiente padronizado (Docker + Python 3.11 via [UV](https://github.com/astral-sh/uv)) e produzir métricas e recomendações claras para o time.
+Ferramenta interna para comparar diferentes bibliotecas de extração de conteúdo (texto, tabelas, figuras) em PDFs acadêmicos. Ela automatiza a execução das ferramentas, salva todos os artefatos e gera relatórios comparativos.
 
-## Estrutura Inicial
+## Visão geral
 
-```
-pdf-extractor-local/
-├── pdfs-reais/            # 5 PDFs fornecidos pelo time
-├── src/pdf_extractor/     # Código-fonte principal (pipelines, métricas, CLI)
-├── docs/                  # Documentação (comparativos, guias, demo)
-├── artifacts/             # Saídas geradas (textos, tabelas, relatórios)
-├── Dockerfile             # Imagem base python:3.11-slim com UV e deps nativas
-├── docker-compose.yml     # Orquestração (serviço principal + Grobid opcional)
-├── pyproject.toml         # Metadados do projeto e dependências gerenciadas pelo UV
-└── README.md              # Este documento
-```
-
-## Arquitetura de funcionamento
-
-- **CLI (`src/pdf_extractor/cli.py`)**: expõe três subcomandos (`extract`, `demo`, `evaluate`) e é o ponto de entrada usado por `uv run pdf-extractor ...`.
-- **ExtractionManager (`src/pdf_extractor/pipelines/manager.py`)**: recebe a lista de PDFs e ferramentas, instancia os adaptadores necessários, coleta métricas e gera `artifacts/<PDF>/<tool>`.
-- **Adaptadores (`src/pdf_extractor/pipelines/adapters/`)**: encapsulam cada ferramenta externa. A maioria chama bibliotecas Python diretamente; casos especiais (Marker/Nougat) executam CLIs oficiais (`marker_single`, `nougat`) e normalizam a saída.
-- **Artefatos**: todo resultado gera `text.md`, `tables.json`, `figures.json` e `summary.json`, além do consolidado `artifacts/comparativo.json` para posterior análise.
-- **Docker Compose**: o serviço `app` roda a CLI com todas as dependências (incluindo PyTorch); o serviço opcional `grobid` fica disponível para o adaptador de mesmo nome. Montamos `pdfs-reais/`, `artifacts/` e `docs/` para inspecionar os resultados no host.
+- `src/pdf_extractor/cli.py`: CLI com três comandos principais (`extract`, `demo`, `evaluate`).
+- `src/pdf_extractor/pipelines/manager.py`: orquestra os adaptadores e gerencia cache/persistência.
+- `src/pdf_extractor/pipelines/adapters/`: cada adaptador encapsula uma ferramenta (Docling, MarkItDown, PyMuPDF, pdfplumber, Nougat, Marker, Grobid).
+- `artifacts/`: resultados organizados por PDF e ferramenta.
+- `docs/`: materiais derivados, como relatórios e guias.
 
 ## Pré-requisitos
 
-- [UV](https://github.com/astral-sh/uv) instalado localmente (>= 0.4).
-- Docker e Docker Compose.
-- PDFs de teste na pasta `pdfs-reais/` (já incluídos).
+| Onde rodar? | Ferramentas necessárias |
+|-------------|-------------------------|
+| Ambiente local | [UV](https://github.com/astral-sh/uv) ≥ 0.4 e Python 3.11 |
+| Contêiner | Docker + Docker Compose |
 
-## Como começar
+Os PDFs já estão em `pdfs-reais/`. Se quiser testar outros arquivos basta colocá-los nessa pasta ou apontar `--pdf-dir` para outro diretório.
 
-### Local (UV)
+## Fluxo recomendado
 
+1. **Instalar dependências**
+   ```bash
+   uv sync --dev
+   ```
+   > Em macOS x86_64 algumas bibliotecas pesadas (Docling/Nougat/Marker) não possuem wheels. Use Docker nesses casos.
+
+2. **Extrair conteúdo**
+   - Todos os PDFs + todas as ferramentas:
+     ```bash
+     uv run pdf-extractor extract --pdf-dir pdfs-reais --artifact-dir artifacts
+     ```
+   - Subset de ferramentas:
+     ```bash
+     uv run pdf-extractor extract \
+       --pdf-dir pdfs-reais \
+       --artifact-dir artifacts \
+       --tools docling,pymupdf
+     ```
+   - Somente uma ferramenta (ex.: Marker):
+     ```bash
+     uv run pdf-extractor extract --tools marker
+     ```
+
+3. **Demo rápida**
+   ```bash
+   uv run pdf-extractor demo \
+     --tool ferramenta-para-teste \
+     --pdf "pdfs-reais/SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf" \
+     --artifact-dir artifacts/demo-ferramenta-escolhida
+   ```
+   Gera um markdown consolidado em `artifacts/demo-ferramenta-escolhida/<PDF>-docling.md`.
+
+4. **Gerar relatório comparativo**
+   ```bash
+   uv run pdf-extractor evaluate \
+     --report-path artifacts/comparativo.json \
+     --output-markdown docs/comparativo.md
+   ```
+   Usa o `comparativo.json` mais recente para produzir uma tabela com tempos, % de texto e observações.
+
+## Executando via Docker
+
+Ideal quando:
+- Você está em macOS x86_64 e depende de Docling/Nougat/Marker.
+- Precisa garantir versões consistentes (imagem inclui todos os modelos e CLIs).
+
+Passos:
 ```bash
-# 1. Instale as dependências
-uv sync --dev
-
-# 2. Rode todas as ferramentas suportadas em todos os PDFs
-uv run pdf-extractor extract --pdf-dir pdfs-reais --artifact-dir artifacts
-
-# 2b. Rode apenas algumas ferramentas (ex.: PyMuPDF + pdfplumber)
-uv run pdf-extractor extract \
-  --pdf-dir pdfs-reais \
-  --artifact-dir artifacts \
-  --tools pymupdf,pdfplumber
-
-# 2c. Rode somente uma ferramenta pesada (ex.: marker) para todos os PDFs
-uv run pdf-extractor extract --tools marker
-
-# 3. Demo rápida com apenas 1 PDF e 1 ferramenta (gera um markdown resumido)
-uv run pdf-extractor demo \
-  --tool marker \
-  --pdf "pdfs-reais/SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf" \
-  --artifact-dir artifacts/demo-marker
-
-# 4. Consolide os resultados em um comparativo markdown
-uv run pdf-extractor evaluate \
-  --report-path artifacts/comparativo.json \
-  --output-markdown docs/comparativo.md
-```
-
-### Via Docker Compose
-
-```bash
-# Recrie a imagem com todas as dependências (inclui marker_single e checkpoints do Nougat)
+# Construir imagem (baixa modelos do Nougat e instala marker_single)
 docker compose build app
 
-# Execute todas as ferramentas dentro do contêiner
+# Rodar extração completa dentro do contêiner
 docker compose run --rm app uv run pdf-extractor extract \
   --pdf-dir /app/pdfs-reais \
   --artifact-dir /app/artifacts
 
-# Execute apenas uma ferramenta (ex.: marker ou nougat)
-docker compose run --rm app uv run pdf-extractor extract \
-  --pdf-dir /app/pdfs-reais \
-  --artifact-dir /app/artifacts \
-  --tools marker
-
-# Rode a demo para um único PDF (útil para validar marker/nougat isoladamente)
+# Demo isolada (ex.: Marker)
 docker compose run --rm app uv run pdf-extractor demo \
   --tool marker \
   --pdf "/app/pdfs-reais/SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf" \
   --artifact-dir /app/artifacts/demo-marker
-
-# Para processamento completo + Grobid, suba tudo de uma vez
-docker compose up --build
 ```
+
+Serviços do `docker-compose.yml`:
+- `app`: container principal com UV, PyTorch e todas as dependências.
+- `grobid`: opcional. Suba com `docker compose up grobid` se quiser usar o adaptador Grobid.
+
+Volumes mapeados:
+- `./pdfs-reais` → `/app/pdfs-reais`
+- `./artifacts` → `/app/artifacts`
+- `./docs` → `/app/docs`
 
 ## Estrutura de artefatos
 
-- `artifacts/<PDF>/<tool>/text.md`: texto principal em Markdown ou texto simples.
-- `artifacts/<PDF>/<tool>/tables.json`: tabelas normalizadas.
-- `artifacts/<PDF>/<tool>/figures.json`: descrições/metadados de figuras.
-- `artifacts/<PDF>/<tool>/summary.json`: métricas individuais (tempo, % de caracteres, qualidade de tabelas).
-- `artifacts/comparativo.json`: consolidação automática (entrada para `pdf-extractor evaluate`).
+Para cada PDF/ferramenta:
+- `text.md`: texto extraído (geralmente Markdown).
+- `tables.json`: tabelas normalizadas (lista de `rows`, `caption`, `page`).
+- `figures.json`: figuras/legendas.
+- `summary.json`: métricas (tempo, nº de caracteres, nº de tabelas/figuras, notas).
 
-## Docker Compose
+Consolidação global:
+- `artifacts/comparativo.json`: registro de todos os runs. É a entrada do comando `evaluate`.
 
-O `docker-compose.yml` fornece dois serviços:
+## Ferramentas suportadas
 
-1. `app`: imagem baseada em `python:3.11-slim`, com UV e todas as bibliotecas (Docling, MarkItDown, PyMuPDF, pdfplumber, Nougat, Marker).
-2. `grobid`: container oficial `lfoppiano/grobid`. O serviço `app` depende dele para o adaptador Grobid.
+| Ferramenta | Função principal | Observações |
+|------------|------------------|-------------|
+| Docling | Conversão completa (Markdown + tabelas/figuras) | Requer PyTorch ≥ 2.3 |
+| MarkItDown | Conversão rápida para Markdown | Ótima para textos limpos |
+| PyMuPDF | Extração textual+nativa | Identifica figuras por imagem |
+| pdfplumber | Texto + tabelas (OCR leve) | Dependência mínima |
+| Nougat | OCR científico → Markdown | CLI externo (`nougat`) |
+| Marker | Extração multimodal (Surya) | Idealmente com GPU |
+| Grobid | TEI + estrutura acadêmica | Precisa do serviço `grobid` ativo |
 
-Mounts importantes:
+Você escolhe quais rodar passando `--tools tool_a,tool_b`.
 
-- `./pdfs-reais` (somente leitura) → `/app/pdfs-reais`.
-- `./artifacts` e `./docs` → sincronizados para inspecionar saídas localmente.
+## Resolução de problemas comuns
 
-Rodando:
+- **Marker/Nougat não encontrados**: confirme se está rodando dentro do contêiner ou em máquina com PyTorch compatível. Fora do Docker, `marker_single` e `nougat` precisam estar no PATH.
+- **Grobid falha (`nodename nor servname provided`)**: suba o serviço (`docker compose up grobid`) e/ou configure `GROBID_URL=http://localhost:8070`.
+- **Execuções repetidas não atualizam artefatos**: use `--overwrite` no comando `extract` para forçar reprocessamento.
+- **Mac x86_64 travando no `uv sync`**: instale apenas dependências leves localmente (`uv sync --no-dev`) e processe via Docker.
 
-```bash
-docker compose up --build
-# ou somente extrair sem Grobid
-docker compose run --rm app uv run pdf-extractor extract --tools pymupdf,pdfplumber
-```
+## Próximos passos
 
-## Compatibilidade em macOS x86_64
+- Integrar os artefatos (principalmente os de Docling) em pipelines de RAG.
+- Ajustar/adicionar adaptadores para novas ferramentas.
+- Automatizar benchmarks (CI) usando o comando `extract` e armazenar `comparativo.json`.
 
-Algumas dependências (Docling, Nougat e Marker) exigem PyTorch >= 2.3, que não possui wheels oficiais para macOS Intel. Para manter o `uv sync` funcional no host:
-
-- Essas bibliotecas são instaladas automaticamente apenas em plataformas suportadas (Linux, macOS ARM, etc.).
-- No mac x86_64, os adaptadores correspondentes continuam disponíveis via Docker (`docker compose run --rm app ...`) e a CLI lida com a ausência dos pacotes retornando erros amigáveis.
-- Se precisar testar Docling/Nougat/Marker localmente, utilize o contêiner ou uma VM Linux.
-- **Marker em CPU:** mesmo dentro do contêiner, o CLI do Marker apresenta instabilidades quando roda apenas em CPU (encerra com código `-7` após carregar os modelos Surya). Caso precise de resultados do Marker, priorize uma máquina com GPU Nvidia compatível ou use as demais ferramentas (Docling/Markitdown) como fallback.
-- **Marker Single CLI:** seguindo o README oficial, utilizamos `marker_single` (em vez de `marker`) para processar um PDF por vez e evitar as falhas do modo multiprocessado em CPU. Se quiser voltar ao comportamento anterior, defina `MARKER_CLI=marker`.
-- **Nougat offline:** o Dockerfile passa a baixar o checkpoint `0.1.0-base` no build e exporta `NOUGAT_CHECKPOINT`, permitindo que o CLI rode sem acesso à internet durante a extração.
-- **Tuning do Marker:** o adaptador aceita:
-  - `MARKER_USE_UV_RUN` (padrão `1`) para rodar exatamente `uv run marker_single ...`, como recomendado na documentação oficial.
-  - `MARKER_BATCH_MULTIPLIER` (padrão `1`) e `MARKER_EXTRA_ARGS` para propagar flags extras ao CLI.
-  - `MARKER_MAX_RETRIES` (padrão `1`, ou seja, até 2 tentativas) para reexecutar automaticamente em códigos `-7/-8/-9`.
-
-> **Status:** ambiente preparado com UV + Docker; pipelines implementados e documentação/demo atualizadas, com fallback para plataformas sem suporte oficial do PyTorch.
+Caso tenha dúvidas ou precise rodar apenas uma parte do pipeline, abra um chat ou consulte o script `src/pdf_extractor/cli.py` para ver todas as opções disponíveis.

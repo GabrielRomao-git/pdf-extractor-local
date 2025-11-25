@@ -1,0 +1,1 @@
+Falha na ferramenta docling: Docling não está instalado ou falhou ao inicializar.

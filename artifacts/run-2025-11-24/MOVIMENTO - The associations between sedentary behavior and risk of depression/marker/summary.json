@@ -1,0 +1,17 @@
+{
+  "pdf_name": "MOVIMENTO - The associations between sedentary behavior and risk of depression.pdf",
+  "tool": "marker",
+  "elapsed_seconds": 0.072,
+  "text_characters": 145,
+  "tables_count": 0,
+  "figures_count": 0,
+  "table_quality": 0.0,
+  "notes": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)",
+  "success": false,
+  "artifact_dir": "artifacts/run-2025-11-24/MOVIMENTO - The associations between sedentary behavior and risk of depression/marker",
+  "metadata": {
+    "error": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)",
+    "tool": "marker"
+  },
+  "error": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)"
+}

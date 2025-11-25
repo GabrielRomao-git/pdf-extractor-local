@@ -1,0 +1,580 @@
+{
+  "generated_at": "2025-11-24T20:49:24.953153+00:00",
+  "runs": [
+    {
+      "pdf_name": "ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health.pdf",
+      "tool": "docling",
+      "elapsed_seconds": 0.0,
+      "text_characters": 81,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "Docling não está instalado ou falhou ao inicializar.",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health/docling",
+      "metadata": {
+        "error": "Docling não está instalado ou falhou ao inicializar.",
+        "tool": "docling"
+      },
+      "error": "Docling não está instalado ou falhou ao inicializar."
+    },
+    {
+      "pdf_name": "ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health.pdf",
+      "tool": "markitdown",
+      "elapsed_seconds": 30.7,
+      "text_characters": 64046,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "",
+      "success": true,
+      "artifact_dir": "artifacts/run-2025-11-24/ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health/markitdown",
+      "metadata": {
+        "engine": "markitdown"
+      }
+    },
+    {
+      "pdf_name": "ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health.pdf",
+      "tool": "pymupdf",
+      "elapsed_seconds": 8.48,
+      "text_characters": 63759,
+      "tables_count": 0,
+      "figures_count": 5,
+      "table_quality": 0.0,
+      "notes": "",
+      "success": true,
+      "artifact_dir": "artifacts/run-2025-11-24/ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health/pymupdf",
+      "metadata": {
+        "engine": "pymupdf",
+        "num_pages": 8
+      }
+    },
+    {
+      "pdf_name": "ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health.pdf",
+      "tool": "pdfplumber",
+      "elapsed_seconds": 4.343,
+      "text_characters": 62835,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "",
+      "success": true,
+      "artifact_dir": "artifacts/run-2025-11-24/ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health/pdfplumber",
+      "metadata": {
+        "engine": "pdfplumber",
+        "num_pages": 8
+      }
+    },
+    {
+      "pdf_name": "ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health.pdf",
+      "tool": "grobid",
+      "elapsed_seconds": 0.311,
+      "text_characters": 106,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "Falha ao chamar Grobid: [Errno 8] nodename nor servname provided, or not known",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health/grobid",
+      "metadata": {
+        "error": "Falha ao chamar Grobid: [Errno 8] nodename nor servname provided, or not known",
+        "tool": "grobid"
+      },
+      "error": "Falha ao chamar Grobid: [Errno 8] nodename nor servname provided, or not known"
+    },
+    {
+      "pdf_name": "ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health.pdf",
+      "tool": "nougat",
+      "elapsed_seconds": 0.003,
+      "text_characters": 74,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "CLI do Nougat (nougat) não encontrado no PATH.",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health/nougat",
+      "metadata": {
+        "error": "CLI do Nougat (nougat) não encontrado no PATH.",
+        "tool": "nougat"
+      },
+      "error": "CLI do Nougat (nougat) não encontrado no PATH."
+    },
+    {
+      "pdf_name": "ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health.pdf",
+      "tool": "marker",
+      "elapsed_seconds": 0.099,
+      "text_characters": 145,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health/marker",
+      "metadata": {
+        "error": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)",
+        "tool": "marker"
+      },
+      "error": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)"
+    },
+    {
+      "pdf_name": "ALIMENTAÇÃO- Journal of Internal Medicine - 2023 - Hu - Diet strategies for promoting healthy aging and longevity  An epidemiological.pdf",
+      "tool": "docling",
+      "elapsed_seconds": 0.0,
+      "text_characters": 81,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "Docling não está instalado ou falhou ao inicializar.",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/ALIMENTAÇÃO- Journal of Internal Medicine - 2023 - Hu - Diet strategies for promoting healthy aging and longevity  An epidemiological/docling",
+      "metadata": {
+        "error": "Docling não está instalado ou falhou ao inicializar.",
+        "tool": "docling"
+      },
+      "error": "Docling não está instalado ou falhou ao inicializar."
+    },
+    {
+      "pdf_name": "ALIMENTAÇÃO- Journal of Internal Medicine - 2023 - Hu - Diet strategies for promoting healthy aging and longevity  An epidemiological.pdf",
+      "tool": "markitdown",
+      "elapsed_seconds": 2.767,
+      "text_characters": 127441,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "",
+      "success": true,
+      "artifact_dir": "artifacts/run-2025-11-24/ALIMENTAÇÃO- Journal of Internal Medicine - 2023 - Hu - Diet strategies for promoting healthy aging and longevity  An epidemiological/markitdown",
+      "metadata": {
+        "engine": "markitdown"
+      }
+    },
+    {
+      "pdf_name": "ALIMENTAÇÃO- Journal of Internal Medicine - 2023 - Hu - Diet strategies for promoting healthy aging and longevity  An epidemiological.pdf",
+      "tool": "pymupdf",
+      "elapsed_seconds": 17.735,
+      "text_characters": 126971,
+      "tables_count": 0,
+      "figures_count": 4,
+      "table_quality": 0.0,
+      "notes": "",
+      "success": true,
+      "artifact_dir": "artifacts/run-2025-11-24/ALIMENTAÇÃO- Journal of Internal Medicine - 2023 - Hu - Diet strategies for promoting healthy aging and longevity  An epidemiological/pymupdf",
+      "metadata": {
+        "engine": "pymupdf",
+        "num_pages": 24
+      }
+    },
+    {
+      "pdf_name": "ALIMENTAÇÃO- Journal of Internal Medicine - 2023 - Hu - Diet strategies for promoting healthy aging and longevity  An epidemiological.pdf",
+      "tool": "pdfplumber",
+      "elapsed_seconds": 5.751,
+      "text_characters": 120728,
+      "tables_count": 8,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "",
+      "success": true,
+      "artifact_dir": "artifacts/run-2025-11-24/ALIMENTAÇÃO- Journal of Internal Medicine - 2023 - Hu - Diet strategies for promoting healthy aging and longevity  An epidemiological/pdfplumber",
+      "metadata": {
+        "engine": "pdfplumber",
+        "num_pages": 24
+      }
+    },
+    {
+      "pdf_name": "ALIMENTAÇÃO- Journal of Internal Medicine - 2023 - Hu - Diet strategies for promoting healthy aging and longevity  An epidemiological.pdf",
+      "tool": "grobid",
+      "elapsed_seconds": 0.016,
+      "text_characters": 106,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "Falha ao chamar Grobid: [Errno 8] nodename nor servname provided, or not known",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/ALIMENTAÇÃO- Journal of Internal Medicine - 2023 - Hu - Diet strategies for promoting healthy aging and longevity  An epidemiological/grobid",
+      "metadata": {
+        "error": "Falha ao chamar Grobid: [Errno 8] nodename nor servname provided, or not known",
+        "tool": "grobid"
+      },
+      "error": "Falha ao chamar Grobid: [Errno 8] nodename nor servname provided, or not known"
+    },
+    {
+      "pdf_name": "ALIMENTAÇÃO- Journal of Internal Medicine - 2023 - Hu - Diet strategies for promoting healthy aging and longevity  An epidemiological.pdf",
+      "tool": "nougat",
+      "elapsed_seconds": 0.0,
+      "text_characters": 74,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "CLI do Nougat (nougat) não encontrado no PATH.",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/ALIMENTAÇÃO- Journal of Internal Medicine - 2023 - Hu - Diet strategies for promoting healthy aging and longevity  An epidemiological/nougat",
+      "metadata": {
+        "error": "CLI do Nougat (nougat) não encontrado no PATH.",
+        "tool": "nougat"
+      },
+      "error": "CLI do Nougat (nougat) não encontrado no PATH."
+    },
+    {
+      "pdf_name": "ALIMENTAÇÃO- Journal of Internal Medicine - 2023 - Hu - Diet strategies for promoting healthy aging and longevity  An epidemiological.pdf",
+      "tool": "marker",
+      "elapsed_seconds": 0.097,
+      "text_characters": 145,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/ALIMENTAÇÃO- Journal of Internal Medicine - 2023 - Hu - Diet strategies for promoting healthy aging and longevity  An epidemiological/marker",
+      "metadata": {
+        "error": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)",
+        "tool": "marker"
+      },
+      "error": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)"
+    },
+    {
+      "pdf_name": "DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus.pdf",
+      "tool": "docling",
+      "elapsed_seconds": 0.0,
+      "text_characters": 81,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "Docling não está instalado ou falhou ao inicializar.",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus/docling",
+      "metadata": {
+        "error": "Docling não está instalado ou falhou ao inicializar.",
+        "tool": "docling"
+      },
+      "error": "Docling não está instalado ou falhou ao inicializar."
+    },
+    {
+      "pdf_name": "DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus.pdf",
+      "tool": "markitdown",
+      "elapsed_seconds": 1.749,
+      "text_characters": 72912,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "",
+      "success": true,
+      "artifact_dir": "artifacts/run-2025-11-24/DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus/markitdown",
+      "metadata": {
+        "engine": "markitdown"
+      }
+    },
+    {
+      "pdf_name": "DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus.pdf",
+      "tool": "pymupdf",
+      "elapsed_seconds": 9.797,
+      "text_characters": 73184,
+      "tables_count": 3,
+      "figures_count": 0,
+      "table_quality": 0.67,
+      "notes": "",
+      "success": true,
+      "artifact_dir": "artifacts/run-2025-11-24/DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus/pymupdf",
+      "metadata": {
+        "engine": "pymupdf",
+        "num_pages": 11
+      }
+    },
+    {
+      "pdf_name": "DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus.pdf",
+      "tool": "pdfplumber",
+      "elapsed_seconds": 3.821,
+      "text_characters": 71963,
+      "tables_count": 2,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "",
+      "success": true,
+      "artifact_dir": "artifacts/run-2025-11-24/DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus/pdfplumber",
+      "metadata": {
+        "engine": "pdfplumber",
+        "num_pages": 11
+      }
+    },
+    {
+      "pdf_name": "DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus.pdf",
+      "tool": "grobid",
+      "elapsed_seconds": 0.015,
+      "text_characters": 106,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "Falha ao chamar Grobid: [Errno 8] nodename nor servname provided, or not known",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus/grobid",
+      "metadata": {
+        "error": "Falha ao chamar Grobid: [Errno 8] nodename nor servname provided, or not known",
+        "tool": "grobid"
+      },
+      "error": "Falha ao chamar Grobid: [Errno 8] nodename nor servname provided, or not known"
+    },
+    {
+      "pdf_name": "DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus.pdf",
+      "tool": "nougat",
+      "elapsed_seconds": 0.0,
+      "text_characters": 74,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "CLI do Nougat (nougat) não encontrado no PATH.",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus/nougat",
+      "metadata": {
+        "error": "CLI do Nougat (nougat) não encontrado no PATH.",
+        "tool": "nougat"
+      },
+      "error": "CLI do Nougat (nougat) não encontrado no PATH."
+    },
+    {
+      "pdf_name": "DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus.pdf",
+      "tool": "marker",
+      "elapsed_seconds": 0.075,
+      "text_characters": 145,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus/marker",
+      "metadata": {
+        "error": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)",
+        "tool": "marker"
+      },
+      "error": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)"
+    },
+    {
+      "pdf_name": "MOVIMENTO - The associations between sedentary behavior and risk of depression.pdf",
+      "tool": "docling",
+      "elapsed_seconds": 0.0,
+      "text_characters": 81,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "Docling não está instalado ou falhou ao inicializar.",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/MOVIMENTO - The associations between sedentary behavior and risk of depression/docling",
+      "metadata": {
+        "error": "Docling não está instalado ou falhou ao inicializar.",
+        "tool": "docling"
+      },
+      "error": "Docling não está instalado ou falhou ao inicializar."
+    },
+    {
+      "pdf_name": "MOVIMENTO - The associations between sedentary behavior and risk of depression.pdf",
+      "tool": "markitdown",
+      "elapsed_seconds": 1.644,
+      "text_characters": 46276,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "",
+      "success": true,
+      "artifact_dir": "artifacts/run-2025-11-24/MOVIMENTO - The associations between sedentary behavior and risk of depression/markitdown",
+      "metadata": {
+        "engine": "markitdown"
+      }
+    },
+    {
+      "pdf_name": "MOVIMENTO - The associations between sedentary behavior and risk of depression.pdf",
+      "tool": "pymupdf",
+      "elapsed_seconds": 3.829,
+      "text_characters": 44894,
+      "tables_count": 0,
+      "figures_count": 4,
+      "table_quality": 0.0,
+      "notes": "",
+      "success": true,
+      "artifact_dir": "artifacts/run-2025-11-24/MOVIMENTO - The associations between sedentary behavior and risk of depression/pymupdf",
+      "metadata": {
+        "engine": "pymupdf",
+        "num_pages": 10
+      }
+    },
+    {
+      "pdf_name": "MOVIMENTO - The associations between sedentary behavior and risk of depression.pdf",
+      "tool": "pdfplumber",
+      "elapsed_seconds": 2.496,
+      "text_characters": 44167,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "",
+      "success": true,
+      "artifact_dir": "artifacts/run-2025-11-24/MOVIMENTO - The associations between sedentary behavior and risk of depression/pdfplumber",
+      "metadata": {
+        "engine": "pdfplumber",
+        "num_pages": 10
+      }
+    },
+    {
+      "pdf_name": "MOVIMENTO - The associations between sedentary behavior and risk of depression.pdf",
+      "tool": "grobid",
+      "elapsed_seconds": 0.016,
+      "text_characters": 106,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "Falha ao chamar Grobid: [Errno 8] nodename nor servname provided, or not known",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/MOVIMENTO - The associations between sedentary behavior and risk of depression/grobid",
+      "metadata": {
+        "error": "Falha ao chamar Grobid: [Errno 8] nodename nor servname provided, or not known",
+        "tool": "grobid"
+      },
+      "error": "Falha ao chamar Grobid: [Errno 8] nodename nor servname provided, or not known"
+    },
+    {
+      "pdf_name": "MOVIMENTO - The associations between sedentary behavior and risk of depression.pdf",
+      "tool": "nougat",
+      "elapsed_seconds": 0.0,
+      "text_characters": 74,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "CLI do Nougat (nougat) não encontrado no PATH.",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/MOVIMENTO - The associations between sedentary behavior and risk of depression/nougat",
+      "metadata": {
+        "error": "CLI do Nougat (nougat) não encontrado no PATH.",
+        "tool": "nougat"
+      },
+      "error": "CLI do Nougat (nougat) não encontrado no PATH."
+    },
+    {
+      "pdf_name": "MOVIMENTO - The associations between sedentary behavior and risk of depression.pdf",
+      "tool": "marker",
+      "elapsed_seconds": 0.072,
+      "text_characters": 145,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/MOVIMENTO - The associations between sedentary behavior and risk of depression/marker",
+      "metadata": {
+        "error": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)",
+        "tool": "marker"
+      },
+      "error": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)"
+    },
+    {
+      "pdf_name": "SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf",
+      "tool": "docling",
+      "elapsed_seconds": 0.0,
+      "text_characters": 81,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "Docling não está instalado ou falhou ao inicializar.",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/SONO - Fisiologia do sono, fisiopatologia e higiene do sono/docling",
+      "metadata": {
+        "error": "Docling não está instalado ou falhou ao inicializar.",
+        "tool": "docling"
+      },
+      "error": "Docling não está instalado ou falhou ao inicializar."
+    },
+    {
+      "pdf_name": "SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf",
+      "tool": "markitdown",
+      "elapsed_seconds": 1.661,
+      "text_characters": 57559,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "",
+      "success": true,
+      "artifact_dir": "artifacts/run-2025-11-24/SONO - Fisiologia do sono, fisiopatologia e higiene do sono/markitdown",
+      "metadata": {
+        "engine": "markitdown"
+      }
+    },
+    {
+      "pdf_name": "SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf",
+      "tool": "pymupdf",
+      "elapsed_seconds": 5.101,
+      "text_characters": 57092,
+      "tables_count": 0,
+      "figures_count": 11,
+      "table_quality": 0.0,
+      "notes": "",
+      "success": true,
+      "artifact_dir": "artifacts/run-2025-11-24/SONO - Fisiologia do sono, fisiopatologia e higiene do sono/pymupdf",
+      "metadata": {
+        "engine": "pymupdf",
+        "num_pages": 11
+      }
+    },
+    {
+      "pdf_name": "SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf",
+      "tool": "pdfplumber",
+      "elapsed_seconds": 2.385,
+      "text_characters": 50576,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "",
+      "success": true,
+      "artifact_dir": "artifacts/run-2025-11-24/SONO - Fisiologia do sono, fisiopatologia e higiene do sono/pdfplumber",
+      "metadata": {
+        "engine": "pdfplumber",
+        "num_pages": 11
+      }
+    },
+    {
+      "pdf_name": "SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf",
+      "tool": "grobid",
+      "elapsed_seconds": 0.016,
+      "text_characters": 106,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "Falha ao chamar Grobid: [Errno 8] nodename nor servname provided, or not known",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/SONO - Fisiologia do sono, fisiopatologia e higiene do sono/grobid",
+      "metadata": {
+        "error": "Falha ao chamar Grobid: [Errno 8] nodename nor servname provided, or not known",
+        "tool": "grobid"
+      },
+      "error": "Falha ao chamar Grobid: [Errno 8] nodename nor servname provided, or not known"
+    },
+    {
+      "pdf_name": "SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf",
+      "tool": "nougat",
+      "elapsed_seconds": 0.0,
+      "text_characters": 74,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "CLI do Nougat (nougat) não encontrado no PATH.",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/SONO - Fisiologia do sono, fisiopatologia e higiene do sono/nougat",
+      "metadata": {
+        "error": "CLI do Nougat (nougat) não encontrado no PATH.",
+        "tool": "nougat"
+      },
+      "error": "CLI do Nougat (nougat) não encontrado no PATH."
+    },
+    {
+      "pdf_name": "SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf",
+      "tool": "marker",
+      "elapsed_seconds": 0.071,
+      "text_characters": 145,
+      "tables_count": 0,
+      "figures_count": 0,
+      "table_quality": 0.0,
+      "notes": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)",
+      "success": false,
+      "artifact_dir": "artifacts/run-2025-11-24/SONO - Fisiologia do sono, fisiopatologia e higiene do sono/marker",
+      "metadata": {
+        "error": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)",
+        "tool": "marker"
+      },
+      "error": "Marker retornou código 2: error: Failed to spawn: `marker_single`\n  Caused by: No such file or directory (os error 2)"
+    }
+  ]
+}

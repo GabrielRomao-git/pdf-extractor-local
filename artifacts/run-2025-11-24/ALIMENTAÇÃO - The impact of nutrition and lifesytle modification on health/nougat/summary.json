@@ -1,0 +1,17 @@
+{
+  "pdf_name": "ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health.pdf",
+  "tool": "nougat",
+  "elapsed_seconds": 0.003,
+  "text_characters": 74,
+  "tables_count": 0,
+  "figures_count": 0,
+  "table_quality": 0.0,
+  "notes": "CLI do Nougat (nougat) não encontrado no PATH.",
+  "success": false,
+  "artifact_dir": "artifacts/run-2025-11-24/ALIMENTAÇÃO - The impact of nutrition and lifesytle modification on health/nougat",
+  "metadata": {
+    "error": "CLI do Nougat (nougat) não encontrado no PATH.",
+    "tool": "nougat"
+  },
+  "error": "CLI do Nougat (nougat) não encontrado no PATH."
+}

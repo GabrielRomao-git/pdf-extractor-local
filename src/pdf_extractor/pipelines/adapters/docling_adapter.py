@@ -14,6 +14,7 @@ from pdf_extractor.utils import dataframe_to_rows
 
 
 def _coerce_value(value: Any) -> Any:
+    """Executa callables e trata exceções para obter um valor pronto para uso."""
     if callable(value):
         try:
             return value()
@@ -23,6 +24,7 @@ def _coerce_value(value: Any) -> Any:
 
 
 def _ensure_str(value: Any) -> str:
+    """Normaliza qualquer entrada para string limpa, evitando None."""
     coerced = _coerce_value(value)
     if coerced is None:
         return ""
@@ -32,6 +34,7 @@ def _ensure_str(value: Any) -> str:
 
 
 def _coerce_number(value: Any) -> int | float | None:
+    """Tenta converter o valor para número preservando None em falhas."""
     coerced = _coerce_value(value)
     if isinstance(coerced, (int, float)):
         return coerced
@@ -47,6 +50,7 @@ class DoclingAdapter(ToolAdapter):
     description = "Conversor Docling para Markdown estruturado"
 
     def __init__(self) -> None:
+        """Inicializa o conversor Docling, garantindo dependências disponíveis."""
         try:
             from docling.document_converter import DocumentConverter
         except Exception as exc:  # pragma: no cover - import heavy
@@ -55,6 +59,7 @@ class DoclingAdapter(ToolAdapter):
         self._converter = DocumentConverter()
 
     def extract(self, pdf_path: Path) -> ExtractionBundle:
+        """Converte o PDF para markdown, tabelas e figuras via Docling."""
         try:
             result = self._converter.convert(pdf_path)
         except Exception as exc:
@@ -73,6 +78,7 @@ class DoclingAdapter(ToolAdapter):
         return ExtractionBundle(text=text, tables=tables, figures=figures, metadata=metadata)
 
     def _export_markdown(self, result: Any, document: Any) -> str:
+        """Extrai markdown preferindo o exportador do documento e caindo para campos alternativos."""
         exporter = getattr(document, "export_to_markdown", None)
         if callable(exporter):
             try:
@@ -88,6 +94,7 @@ class DoclingAdapter(ToolAdapter):
         return _ensure_str(fallback)
 
     def _parse_tables(self, result: Any, document: Any) -> list[TableArtifact]:
+        """Produz artefatos de tabela a partir das estruturas retornadas pelo Docling."""
         tables: list[TableArtifact] = []
         table_sources = getattr(document, "tables", None) or getattr(result, "tables", None) or []
         for idx, table in enumerate(table_sources):
@@ -104,6 +111,7 @@ class DoclingAdapter(ToolAdapter):
         return tables
 
     def _parse_figures(self, result: Any, document: Any) -> list[FigureArtifact]:
+        """Produz artefatos de figura com metadados básicos do Docling."""
         figure_sources = getattr(document, "figures", None) or getattr(result, "figures", None) or []
         figures: list[FigureArtifact] = []
         for idx, figure in enumerate(figure_sources):
@@ -120,6 +128,7 @@ class DoclingAdapter(ToolAdapter):
         return figures
 
     def _extract_rows(self, table: Any) -> list[list[str]]:
+        """Tenta múltiplas estratégias para obter linhas tabulares limpas."""
         strategies: list[Callable[[], list[list[str]]]] = []
         if hasattr(table, "df"):
             strategies.append(lambda tbl=table: dataframe_to_rows(tbl.df))
@@ -140,6 +149,7 @@ class DoclingAdapter(ToolAdapter):
         return []
 
     def _markdown_to_rows(self, markdown: str) -> list[list[str]]:
+        """Converte tabelas em markdown para matriz de strings."""
         rows: list[list[str]] = []
         for line in markdown.splitlines():
             line = line.strip()
@@ -150,6 +160,7 @@ class DoclingAdapter(ToolAdapter):
         return rows
 
     def _clean_row(self, row: Any) -> list[str]:
+        """Normaliza células heterogêneas em texto simples por linha."""
         cleaned: list[str] = []
         data = row
         if callable(row):

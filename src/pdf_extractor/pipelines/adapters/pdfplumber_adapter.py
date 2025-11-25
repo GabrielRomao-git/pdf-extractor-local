@@ -16,6 +16,7 @@ class PdfPlumberAdapter(ToolAdapter):
     description = "Extração de texto e tabelas com pdfplumber"
 
     def extract(self, pdf_path: Path) -> ExtractionBundle:
+        """Abre o PDF com pdfplumber e retorna texto contínuo e tabelas básicas."""
         try:
             import pdfplumber
         except Exception as exc:  # pragma: no cover - import heavy

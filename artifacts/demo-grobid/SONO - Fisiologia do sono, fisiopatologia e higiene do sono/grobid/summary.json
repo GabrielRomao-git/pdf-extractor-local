@@ -1,0 +1,16 @@
+{
+  "pdf_name": "SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf",
+  "tool": "grobid",
+  "elapsed_seconds": 5.121,
+  "text_characters": 29865,
+  "tables_count": 3,
+  "figures_count": 9,
+  "table_quality": 0.67,
+  "notes": "",
+  "success": true,
+  "artifact_dir": "/app/artifacts/demo-grobid/SONO - Fisiologia do sono, fisiopatologia e higiene do sono/grobid",
+  "metadata": {
+    "engine": "grobid",
+    "endpoint": "http://grobid:8070/api/processFulltextDocument"
+  }
+}

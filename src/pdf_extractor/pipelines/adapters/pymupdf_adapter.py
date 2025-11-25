@@ -17,6 +17,7 @@ class PyMuPDFAdapter(ToolAdapter):
     description = "Extração com fitz (PyMuPDF) em modo texto + tabelas heurísticas"
 
     def extract(self, pdf_path: Path) -> ExtractionBundle:
+        """Processa o PDF com fitz, reunindo texto, tabelas heurísticas e figuras."""
         try:
             import fitz
         except Exception as exc:  # pragma: no cover - import heavy
@@ -41,6 +42,7 @@ class PyMuPDFAdapter(ToolAdapter):
         return ExtractionBundle(text="\n\n".join(texts), tables=tables, figures=figures, metadata=metadata)
 
     def _extract_tables(self, page, page_number: int) -> list[TableArtifact]:
+        """Tenta identificar tabelas via `find_tables` e normaliza linhas por página."""
         tables: list[TableArtifact] = []
         try:
             finder = page.find_tables()
@@ -66,6 +68,7 @@ class PyMuPDFAdapter(ToolAdapter):
         return tables
 
     def _extract_figures(self, page, page_number: int) -> list[FigureArtifact]:
+        """Mapeia imagens da página para artefatos de figura com metadados básicos."""
         figures: list[FigureArtifact] = []
         try:
             images = page.get_images(full=True)

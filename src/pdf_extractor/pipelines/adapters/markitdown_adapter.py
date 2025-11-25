@@ -12,6 +12,7 @@ from pdf_extractor.pipelines.base import (
 
 
 def extract_tables_from_markdown(markdown: str) -> list[TableArtifact]:
+    """Varre o markdown em busca de blocos tabulares e os converte em TableArtifact."""
     tables: list[TableArtifact] = []
     current: list[str] = []
     for line in markdown.splitlines():
@@ -27,6 +28,7 @@ def extract_tables_from_markdown(markdown: str) -> list[TableArtifact]:
 
 
 def _markdown_table_to_artifact(rows: list[str]) -> TableArtifact:
+    """Normaliza linhas de tabela em markdown em uma matriz de strings limpa."""
     clean_rows: list[list[str]] = []
     for row in rows:
         row = row.strip()
@@ -43,6 +45,7 @@ class MarkitdownAdapter(ToolAdapter):
     description = "Conversão via MarkItDown com realce em Markdown"
 
     def __init__(self) -> None:
+        """Inicializa o conversor MarkItDown, garantindo dependência disponível."""
         try:
             from markitdown import MarkItDown
         except Exception as exc:  # pragma: no cover - import heavy
@@ -51,6 +54,7 @@ class MarkitdownAdapter(ToolAdapter):
         self._converter = MarkItDown()
 
     def extract(self, pdf_path: Path) -> ExtractionBundle:
+        """Converte o PDF em markdown usando MarkItDown e deriva tabelas simples."""
         try:
             result = self._converter.convert(str(pdf_path))
         except Exception as exc:

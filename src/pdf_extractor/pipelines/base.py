@@ -13,6 +13,7 @@ class TableArtifact:
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        """Serializa o artefato de tabela para dicionário simples."""
         return {
             "rows": self.rows,
             "caption": self.caption,
@@ -29,6 +30,7 @@ class FigureArtifact:
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        """Converte a figura para um payload pronto para JSON."""
         return {
             "caption": self.caption,
             "page": self.page,
@@ -45,6 +47,7 @@ class ExtractionBundle:
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        """Retorna representação completa de texto, tabelas e figuras."""
         return {
             "text": self.text,
             "tables": [table.to_dict() for table in self.tables],
@@ -66,6 +69,7 @@ class ExtractionMetrics:
     success: bool = True
 
     def to_dict(self) -> dict[str, Any]:
+        """Transforma métricas num dicionário pronto para relatórios."""
         return {
             "pdf_name": self.pdf_name,
             "tool": self.tool_name,
@@ -89,6 +93,7 @@ class ExtractionResult:
     error: str | None = None
 
     def to_summary(self) -> dict[str, Any]:
+        """Gera resumo compacto combinando métricas e metadados do bundle."""
         payload = {
             **self.metrics.to_dict(),
             "artifact_dir": str(self.artifact_dir),
@@ -99,6 +104,7 @@ class ExtractionResult:
         return payload
 
     def to_markdown(self) -> str:
+        """Cria uma visualização em markdown com estatísticas e texto bruto."""
         header = f"# {self.pdf_path.name} · {self.tool_name}\n\n"
         info = (
             f"- Tempo: {self.metrics.elapsed_seconds:.2f}s\n"
@@ -121,13 +127,16 @@ class ToolAdapter:
     description: str = ""
 
     def extract(self, pdf_path: Path) -> ExtractionBundle:
+        """Responsável por executar a ferramenta e retornar um bundle estruturado."""
         raise NotImplementedError
 
     def metadata(self) -> dict[str, Any]:
+        """Metadados básicos usados para identificar o adaptador."""
         return {"name": self.name, "display_name": self.display_name}
 
 
 def estimate_table_quality(tables: list[TableArtifact]) -> float:
+    """Calcula proporção de tabelas com múltiplas linhas e conteúdo não vazio."""
     if not tables:
         return 0.0
     rich_tables = sum(

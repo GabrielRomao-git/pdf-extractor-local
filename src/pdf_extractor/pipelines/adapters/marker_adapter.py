@@ -19,8 +19,7 @@ class MarkerAdapter(ToolAdapter):
     RETRYABLE_CODES = {-7, -8, -9}
 
     def __init__(self, command: str | None = None) -> None:
-        # O CLI `marker` padrão usa multiprocessamento intenso e falha facilmente em CPU,
-        # então priorizamos `marker_single`, conforme README oficial.
+        """Configura o comando base do Marker e parâmetros de repetição/afinamento."""
         self.command = command or os.getenv("MARKER_CLI", "marker_single")
         self.max_retries = int(os.getenv("MARKER_MAX_RETRIES", "1"))
         self.batch_multiplier = os.getenv("MARKER_BATCH_MULTIPLIER", "1")
@@ -29,6 +28,7 @@ class MarkerAdapter(ToolAdapter):
         self.uv_binary = os.getenv("MARKER_UV_BINARY", "uv")
 
     def extract(self, pdf_path: Path) -> ExtractionBundle:
+        """Executa o CLI do Marker, realiza novas tentativas se necessário e retorna markdown/tabelas."""
         base_cmd: list[str]
         if self.use_uv_run:
             uv_path = shutil.which(self.uv_binary)

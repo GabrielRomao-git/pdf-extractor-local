@@ -1,0 +1,17 @@
+{
+  "pdf_name": "DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus.pdf",
+  "tool": "nougat",
+  "elapsed_seconds": 0.0,
+  "text_characters": 74,
+  "tables_count": 0,
+  "figures_count": 0,
+  "table_quality": 0.0,
+  "notes": "CLI do Nougat (nougat) não encontrado no PATH.",
+  "success": false,
+  "artifact_dir": "artifacts/run-2025-11-24/DM - Diet and exercise in the prevention and treatment of type 2 diabetes mellitus/nougat",
+  "metadata": {
+    "error": "CLI do Nougat (nougat) não encontrado no PATH.",
+    "tool": "nougat"
+  },
+  "error": "CLI do Nougat (nougat) não encontrado no PATH."
+}

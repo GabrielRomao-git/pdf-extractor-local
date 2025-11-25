@@ -27,16 +27,19 @@ class ExtractionOptions:
 
     @classmethod
     def defaults(cls) -> "ExtractionOptions":
+        """Retorna opções contendo todas as ferramentas registradas."""
         return cls(tool_names=tuple(ADAPTER_TYPES.keys()))
 
     @classmethod
     def from_tool_list(cls, tools: str | None) -> "ExtractionOptions":
+        """Cria opções a partir de uma lista separada por vírgula."""
         if not tools:
             return cls.defaults()
         names = tuple(tool.strip() for tool in tools.split(",") if tool.strip())
         return cls(tool_names=names)
 
     def validate(self) -> None:
+        """Garante que todos os nomes de ferramentas são suportados."""
         invalid = [name for name in self.tool_names if name not in ADAPTER_TYPES]
         if invalid:
             raise ValueError(f"Ferramentas inválidas: {', '.join(invalid)}")
@@ -44,6 +47,7 @@ class ExtractionOptions:
 
 class ExtractionManager:
     def __init__(self, artifact_dir: Path, overwrite: bool = False) -> None:
+        """Configura diretório de artefatos e cache interno de adaptadores."""
         self.artifact_dir = Path(artifact_dir)
         self.overwrite = overwrite
         self._adapter_cache: dict[str, ToolAdapter] = {}
@@ -54,6 +58,7 @@ class ExtractionManager:
         pdf_paths: Iterable[Path],
         options: ExtractionOptions | None = None,
     ) -> list[list[ExtractionResult]]:
+        """Executa todas as ferramentas selecionadas sobre uma lista de PDFs."""
         options = options or ExtractionOptions.defaults()
         options.validate()
         results: list[list[ExtractionResult]] = []
@@ -76,6 +81,7 @@ class ExtractionManager:
         return results
 
     def run_single(self, pdf_path: Path, options: ExtractionOptions | None = None) -> ExtractionResult:
+        """Processa um único PDF usando apenas a primeira ferramenta da lista."""
         options = options or ExtractionOptions.defaults()
         options.validate()
         tool_name = options.tool_names[0]
@@ -84,6 +90,7 @@ class ExtractionManager:
     # Internal helpers -----------------------------------------------------------------
 
     def _run_with_cache(self, pdf_path: Path, tool_name: str) -> ExtractionResult:
+        """Executa a ferramenta, reutilizando resultados persistidos quando disponíveis."""
         artifact_dir = self._artifact_dir_for(pdf_path, tool_name)
         if not self.overwrite and self._has_cached_summary(artifact_dir):
             cached = self._load_cached_result(pdf_path, tool_name, artifact_dir)
@@ -138,6 +145,7 @@ class ExtractionManager:
         return result
 
     def _get_adapter(self, tool_name: str) -> ToolAdapter:
+        """Obtém adaptador do cache ou instancia dinamicamente."""
         if tool_name in self._adapter_cache:
             return self._adapter_cache[tool_name]
         adapter_cls = ADAPTER_TYPES.get(tool_name)
@@ -155,10 +163,12 @@ class ExtractionManager:
         return adapter
 
     def _artifact_dir_for(self, pdf_path: Path, tool_name: str) -> Path:
+        """Calcula caminho onde os artefatos desse PDF/ferramenta serão salvos."""
         pdf_dir = self.artifact_dir / pdf_path.stem / tool_name
         return pdf_dir
 
     def _persist_result(self, result: ExtractionResult) -> None:
+        """Grava texto, tabelas, figuras e resumo em disco para reutilização posterior."""
         artifact_dir = result.artifact_dir
         if artifact_dir.exists() and self.overwrite:
             shutil.rmtree(artifact_dir)
@@ -182,11 +192,13 @@ class ExtractionManager:
         )
 
     def _has_cached_summary(self, artifact_dir: Path) -> bool:
+        """Verifica se já existe um summary.json no diretório de artefatos."""
         return (artifact_dir / "summary.json").exists()
 
     def _load_cached_result(
         self, pdf_path: Path, tool_name: str, artifact_dir: Path
     ) -> ExtractionResult | None:
+        """Reconstrói um ExtractionResult a partir dos arquivos já persistidos."""
         summary_path = artifact_dir / "summary.json"
         try:
             summary_data = json.loads(summary_path.read_text(encoding="utf-8"))
@@ -223,6 +235,7 @@ class ExtractionManager:
         )
 
     def _load_tables(self, path: Path) -> list[TableArtifact]:
+        """Converte o JSON de tabelas em objetos TableArtifact."""
         if not path.exists():
             return []
         try:
@@ -242,6 +255,7 @@ class ExtractionManager:
         return tables
 
     def _load_figures(self, path: Path) -> list[FigureArtifact]:
+        """Converte o JSON de figuras em objetos FigureArtifact."""
         if not path.exists():
             return []
         try:
