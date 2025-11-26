@@ -17,6 +17,15 @@ Ferramenta interna para comparar diferentes bibliotecas de extração de conteú
 | Ambiente local | [UV](https://github.com/astral-sh/uv) ≥ 0.4 e Python 3.11 |
 | Contêiner | Docker + Docker Compose |
 
+Instale o UV (caso não tenha) e crie uma venv dedicada:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv python install 3.11
+uv venv .venv
+source .venv/bin/activate
+```
+
 Os PDFs já estão em `pdfs-reais/`. Se quiser testar outros arquivos basta colocá-los nessa pasta ou apontar `--pdf-dir` para outro diretório.
 
 ## Fluxo recomendado
