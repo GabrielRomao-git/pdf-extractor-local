@@ -1,2 +1,0 @@
-[console_scripts]
-pdf-extractor = pdf_extractor.cli:app

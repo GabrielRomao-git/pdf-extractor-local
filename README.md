@@ -6,69 +6,11 @@ Ferramenta interna para comparar diferentes bibliotecas de extração de conteú
 
 - `src/pdf_extractor/cli.py`: CLI com três comandos principais (`extract`, `demo`, `evaluate`).
 - `src/pdf_extractor/pipelines/manager.py`: orquestra os adaptadores e gerencia cache/persistência.
-- `src/pdf_extractor/pipelines/adapters/`: cada adaptador encapsula uma ferramenta (Docling, MarkItDown, PyMuPDF, pdfplumber, Nougat, Marker, Grobid).
+- `src/pdf_extractor/pipelines/adapters/`: cada adaptador encapsula uma ferramenta (Docling, MarkItDown, PyMuPDF, pdfplumber, Nougat, Marker, Grobid, Chandra).
 - `artifacts/`: resultados organizados por PDF e ferramenta.
 - `docs/`: materiais derivados, como relatórios e guias.
 
-## Pré-requisitos
-
-| Onde rodar? | Ferramentas necessárias |
-|-------------|-------------------------|
-| Ambiente local | [UV](https://github.com/astral-sh/uv) ≥ 0.4 e Python 3.11 |
-| Contêiner | Docker + Docker Compose |
-
-Instale o UV (caso não tenha) e crie uma venv dedicada:
-
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-uv python install 3.11
-uv venv .venv
-source .venv/bin/activate
-```
-
-Os PDFs já estão em `pdfs-reais/`. Se quiser testar outros arquivos basta colocá-los nessa pasta ou apontar `--pdf-dir` para outro diretório.
-
-## Fluxo recomendado
-
-1. **Instalar dependências**
-   ```bash
-   uv sync --dev
-   ```
-   > Em macOS x86_64 algumas bibliotecas pesadas (Docling/Nougat/Marker) não possuem wheels. Use Docker nesses casos.
-
-2. **Extrair conteúdo**
-   - Todos os PDFs + todas as ferramentas:
-     ```bash
-     uv run pdf-extractor extract --pdf-dir pdfs-reais --artifact-dir artifacts
-     ```
-   - Subset de ferramentas:
-     ```bash
-     uv run pdf-extractor extract \
-       --pdf-dir pdfs-reais \
-       --artifact-dir artifacts \
-       --tools docling,pymupdf
-     ```
-   - Somente uma ferramenta (ex.: Marker):
-     ```bash
-     uv run pdf-extractor extract --tools marker
-     ```
-
-3. **Demo rápida**
-   ```bash
-   uv run pdf-extractor demo \
-     --tool ferramenta-para-teste \
-     --pdf "pdfs-reais/SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf" \
-     --artifact-dir artifacts/demo-ferramenta-escolhida
-   ```
-   Gera um markdown consolidado em `artifacts/demo-ferramenta-escolhida/<PDF>-docling.md`.
-
-4. **Gerar relatório comparativo**
-   ```bash
-   uv run pdf-extractor evaluate \
-     --report-path artifacts/comparativo.json \
-     --output-markdown docs/comparativo.md
-   ```
-   Usa o `comparativo.json` mais recente para produzir uma tabela com tempos, % de texto e observações.
+> **Importante:** O projeto deve ser executado exclusivamente via Docker Compose. As instruções abaixo assumem que você utilizará os serviços `app` e (opcionalmente) `grobid` definidos em `docker-compose.yml`.
 
 ## Executando via Docker
 
@@ -81,16 +23,28 @@ Passos:
 # Construir imagem (baixa modelos do Nougat e instala marker_single)
 docker compose build app
 
-# Rodar extração completa dentro do contêiner
-docker compose run --rm app uv run pdf-extractor extract \
+# Subir serviços (app permanece ativo como shell e o Grobid fica disponível)
+docker compose up -d app grobid
+
+# Rodar extração completa dentro do contêiner já em execução
+docker compose exec app uv run pdf-extractor extract \
   --pdf-dir /app/pdfs-reais \
   --artifact-dir /app/artifacts
 
-# Demo isolada (ex.: Marker)
-docker compose run --rm app uv run pdf-extractor demo \
+# Demo isolada (Marker)
+docker compose exec app uv run pdf-extractor demo \
   --tool marker \
   --pdf "/app/pdfs-reais/SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf" \
   --artifact-dir /app/artifacts/demo-marker
+
+# Demo isolada (Chandra)
+docker compose exec app uv run pdf-extractor demo \
+  --tool chandra \
+  --pdf "/app/pdfs-reais/SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf" \
+  --artifact-dir /app/artifacts/demo-chandra
+
+# Quando terminar, pare os serviços (o build só será necessário novamente se mudar o código)
+docker compose stop app grobid
 ```
 
 Serviços do `docker-compose.yml`:
@@ -124,15 +78,44 @@ Consolidação global:
 | Nougat | OCR científico → Markdown | CLI externo (`nougat`) |
 | Marker | Extração multimodal (Surya) | Idealmente com GPU |
 | Grobid | TEI + estrutura acadêmica | Precisa do serviço `grobid` ativo |
+| Chandra | OCR multimodal preservando layout | Instale dentro do contêiner com `docker compose exec app uv pip install "git+https://github.com/datalab-to/chandra.git"` e configure `CHANDRA_*` conforme necessário |
 
 Você escolhe quais rodar passando `--tools tool_a,tool_b`.
 
+## Instalação do Chandra dentro do contêiner
+
+O `chandra-ocr` não é instalado por padrão. Para utilizá-lo, entre no contêiner `app` e instale o pacote diretamente do GitHub:
+
+```bash
+docker compose exec app uv pip install "git+https://github.com/datalab-to/chandra.git"
+```
+
+O binário ficará disponível em `/root/.local/bin/chandra`. Ao executar comandos que usam o adaptador, informe o caminho explícito (ou defina um `.env` com `CHANDRA_CLI=/root/.local/bin/chandra`):
+
+```bash
+docker compose exec app env CHANDRA_CLI=/root/.local/bin/chandra \
+  uv run pdf-extractor demo \
+    --tool chandra \
+    --pdf "/app/pdfs-reais/SONO - Fisiologia do sono, fisiopatologia e higiene do sono.pdf" \
+    --artifact-dir /app/artifacts/demo-chandra
+```
+
+Variáveis de ambiente úteis dentro do contêiner:
+
+- `CHANDRA_CLI` (default: `chandra`): caminho do CLI.
+- `CHANDRA_USE_UV_RUN` (default: `1`): mantém o uso de `uv run`.
+- `CHANDRA_EXTRA_ARGS`: parâmetros adicionais para o CLI (ex.: `--max-pages 2`).
+- `CHANDRA_TIMEOUT`: timeout em segundos.
+- `CHANDRA_PRIMARY_MARKDOWN`: nome preferido do `.md` quando o CLI gera vários arquivos.
+
+Os resultados do CLI (`attention.md`, `attention_metadata.json`, `images/`) são normalizados automaticamente pelo adaptador.
+
 ## Resolução de problemas comuns
 
-- **Marker/Nougat não encontrados**: confirme se está rodando dentro do contêiner ou em máquina com PyTorch compatível. Fora do Docker, `marker_single` e `nougat` precisam estar no PATH.
+- **Marker/Nougat não encontrados**: garanta que o contêiner `app` foi construído após as últimas alterações (`docker compose build app`) e que você está executando via `docker compose exec app ...`.
+- **Chandra não encontrado**: instale o pacote dentro do contêiner (`docker compose exec app uv pip install "git+https://github.com/datalab-to/chandra.git"`) e informe `CHANDRA_CLI=/root/.local/bin/chandra` ao executar.
 - **Grobid falha (`nodename nor servname provided`)**: suba o serviço (`docker compose up grobid`) e/ou configure `GROBID_URL=http://localhost:8070`.
 - **Execuções repetidas não atualizam artefatos**: use `--overwrite` no comando `extract` para forçar reprocessamento.
-- **Mac x86_64 travando no `uv sync`**: instale apenas dependências leves localmente (`uv sync --no-dev`) e processe via Docker.
 
 ## Próximos passos
 

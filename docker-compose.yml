@@ -14,10 +14,7 @@ services:
       - ./docs:/app/docs
     depends_on:
       - grobid
-    command: >
-      uv run pdf-extractor extract
-        --pdf-dir /app/pdfs-reais
-        --artifact-dir /app/artifacts
+    command: ["sleep", "infinity"]
 
   grobid:
     image: lfoppiano/grobid:0.7.3

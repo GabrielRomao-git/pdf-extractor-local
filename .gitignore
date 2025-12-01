@@ -1,0 +1,14 @@
+### Ambientes virtuais
+.venv/
+.venvs/
+
+### Artefatos gerados
+artifacts/
+
+### Caches Python
+__pycache__/
+*.py[cod]
+
+### Metadados de build
+*.egg-info/
+

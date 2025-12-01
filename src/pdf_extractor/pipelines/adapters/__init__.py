@@ -1,5 +1,6 @@
 """Coleção de adaptadores suportados."""
 
+from .chandra_adapter import ChandraAdapter
 from .docling_adapter import DoclingAdapter
 from .grobid_adapter import GrobidAdapter
 from .marker_adapter import MarkerAdapter
@@ -11,6 +12,7 @@ from .pymupdf_adapter import PyMuPDFAdapter
 ADAPTER_TYPES = {
     adapter.name: adapter
     for adapter in [
+        ChandraAdapter,
         DoclingAdapter,
         MarkitdownAdapter,
         PyMuPDFAdapter,
@@ -23,6 +25,7 @@ ADAPTER_TYPES = {
 
 __all__ = [
     "ADAPTER_TYPES",
+    "ChandraAdapter",
     "DoclingAdapter",
     "MarkitdownAdapter",
     "PyMuPDFAdapter",

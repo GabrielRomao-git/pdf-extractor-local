@@ -1,1 +1,0 @@
-Falha na ferramenta grobid: Falha ao chamar Grobid: [Errno 8] nodename nor servname provided, or not known
